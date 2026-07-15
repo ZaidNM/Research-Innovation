@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de administración — Research & Innovation SAC</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     PANTALLA DE LOGIN
+═══════════════════════════════════════════════════ -->
+<div id="admin-login-screen" class="admin-login-screen">
+  <div class="admin-login-card">
+    <div class="admin-login-logo">
+      <div class="admin-login-logo-icon"><i class="ti ti-bulb"></i></div>
+      <span>Research <span class="accent">&amp;</span> Innovation</span>
+    </div>
+    <p class="admin-login-tag">Panel de administración</p>
+
+    <form id="admin-login-form" class="admin-login-form">
+      <label>Correo electrónico
+        <input type="email" id="admin-login-email" required autocomplete="username" placeholder="admin@researchinnovation.com" />
+      </label>
+      <label>Contraseña
+        <input type="password" id="admin-login-password" required autocomplete="current-password" placeholder="••••••••" />
+      </label>
+      <div id="admin-login-error" class="admin-login-error" hidden></div>
+      <button type="submit" class="admin-btn admin-btn-red admin-btn-block">
+        <i class="ti ti-login"></i> Ingresar
+      </button>
+    </form>
+    <a class="admin-login-back" href="/">← Volver al sitio público</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SHELL DE LA APP (visible tras login)
+═══════════════════════════════════════════════════ -->
+<div id="admin-app" class="admin-app" hidden>
+
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="admin-sidebar-brand">
+      <div class="admin-sidebar-logo"><i class="ti ti-bulb"></i></div>
+      <span>Research <span class="accent">&amp;</span> Innovation</span>
+    </div>
+
+    <nav class="admin-nav">
+      <button class="admin-nav-item active" data-section="dashboard"><i class="ti ti-layout-dashboard"></i> Panel general</button>
+      <button class="admin-nav-item" data-section="fichas"><i class="ti ti-clipboard-text"></i> Fichas de orientación <span id="badge-fichas" class="admin-badge" hidden></span></button>
+      <button class="admin-nav-item" data-section="usuarios"><i class="ti ti-users"></i> Usuarios</button>
+      <button class="admin-nav-item" data-section="proyectos"><i class="ti ti-timeline"></i> Proyectos y seguimiento</button>
+      <button class="admin-nav-item" data-section="biblioteca"><i class="ti ti-book"></i> Biblioteca virtual</button>
+      <button class="admin-nav-item" data-section="contenido"><i class="ti ti-edit"></i> Contenido del sitio</button>
+      <button class="admin-nav-item" data-section="faqs"><i class="ti ti-help-circle"></i> Preguntas frecuentes</button>
+      <button class="admin-nav-item" data-section="patentes"><i class="ti ti-video"></i> Patentes destacadas</button>
+      <button class="admin-nav-item" data-section="contactos"><i class="ti ti-mail"></i> Mensajes de contacto <span id="badge-contactos" class="admin-badge" hidden></span></button>
+      <button class="admin-nav-item" data-section="notificaciones"><i class="ti ti-bell"></i> Enviar notificación</button>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <div class="admin-sidebar-user">
+        <div class="admin-sidebar-user-avatar"><i class="ti ti-user-shield"></i></div>
+        <div>
+          <div id="admin-user-nombre" class="admin-sidebar-user-nombre">—</div>
+          <div class="admin-sidebar-user-rol">Administrador</div>
+        </div>
+      </div>
+      <button id="btn-logout" class="admin-btn admin-btn-ghost admin-btn-block admin-btn-sm">
+        <i class="ti ti-logout"></i> Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <button id="admin-hamburger" class="admin-hamburger" aria-label="Abrir menú"><i class="ti ti-menu-2"></i></button>
+      <div>
+        <h1 id="admin-section-title">Panel general</h1>
+        <p id="admin-section-subtitle" class="admin-topbar-sub">Resumen de actividad de la plataforma</p>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <section id="section-dashboard" class="admin-section"></section>
+      <section id="section-fichas" class="admin-section" hidden></section>
+      <section id="section-usuarios" class="admin-section" hidden></section>
+      <section id="section-proyectos" class="admin-section" hidden></section>
+      <section id="section-biblioteca" class="admin-section" hidden></section>
+      <section id="section-contenido" class="admin-section" hidden></section>
+      <section id="section-faqs" class="admin-section" hidden></section>
+      <section id="section-patentes" class="admin-section" hidden></section>
+      <section id="section-contactos" class="admin-section" hidden></section>
+      <section id="section-notificaciones" class="admin-section" hidden></section>
+    </div>
+  </main>
+  <div id="admin-sidebar-overlay" class="admin-sidebar-overlay"></div>
+</div>
+
+<!-- ═══ MODAL GENÉRICO ═══ -->
+<div id="admin-modal-backdrop" class="admin-modal-backdrop" hidden>
+  <div id="admin-modal" class="admin-modal" role="dialog" aria-modal="true">
+    <div class="admin-modal-header">
+      <h3 id="admin-modal-title">—</h3>
+      <button id="admin-modal-close" class="admin-modal-close" aria-label="Cerrar"><i class="ti ti-x"></i></button>
+    </div>
+    <div id="admin-modal-body" class="admin-modal-body"></div>
+  </div>
+</div>
+
+<!-- ═══ TOASTS ═══ -->
+<div id="admin-toasts" class="admin-toasts"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>

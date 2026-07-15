@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research & Innovation SAC — Consultoría de Patentes</title>
+  <meta name="description" content="Diagnóstico, redacción y seguimiento de patentes para universidades, emprendedores e inventores en Perú." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+<!-- ═══ BARRA DE PROGRESO ═══ -->
+<div id="scroll-progress"></div>
+
+<!-- ═══════════════════════════════════════════════
+     NAVBAR GLOBAL
+═══════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a class="nav-logo" onclick="navigateTo('home')" style="cursor:pointer">
+    <div class="nav-logo-icon"><i class="ti ti-bulb"></i></div>
+    <span class="nav-brand">Research <span>&</span> Innovation</span>
+  </a>
+  <!-- Links para usuarios NO autenticados -->
+  <div id="nav-auth" style="display:flex;align-items:center;gap:28px;">
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#patentes">Patentes</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div style="display:flex;gap:10px;">
+      <button class="btn-outline btn-sm" onclick="navigateTo('login')">Iniciar sesión</button>
+      <button class="btn-red btn-sm" onclick="navigateTo('register')">Registrarse</button>
+    </div>
+  </div>
+  <!-- Menú para usuarios autenticados -->
+  <div id="nav-user" style="display:none;align-items:center;gap:12px;">
+    <button class="btn-outline btn-sm" onclick="navigateTo('dashboard');initDashboard()">
+      <i class="ti ti-layout-dashboard" style="font-size:14px"></i> Mi área
+    </button>
+    <div class="nav-user-menu">
+      <button class="nav-user-btn" id="nav-user-btn">
+        <div class="nav-user-avatar">M</div>
+        <span class="nav-user-name">Usuario</span>
+        <i class="ti ti-chevron-down" style="font-size:12px;color:#888"></i>
+      </button>
+      <div class="nav-dropdown" id="nav-dropdown">
+        <a onclick="navigateTo('dashboard');initDashboard()"><i class="ti ti-layout-dashboard"></i> Panel de inicio</a>
+        <a onclick="navigateTo('dashboard');initDashboard();switchDashPanel('biblioteca')"><i class="ti ti-book"></i> Biblioteca</a>
+        <div class="divider"></div>
+        <button id="nav-logout"><i class="ti ti-logout"></i> Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+  <button id="nav-hamburger" aria-label="Abrir menú" style="display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--black)">
+    <i class="ti ti-menu-2"></i>
+  </button>
+</nav>
+
+<!-- Menú móvil (se despliega desde el navbar en pantallas angostas) -->
+<div id="mobile-menu" class="mobile-menu">
+  <a href="#servicios" onclick="closeMobileMenu()">Servicios</a>
+  <a href="#patentes" onclick="closeMobileMenu()">Patentes</a>
+  <a href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <div class="divider"></div>
+  <div id="mobile-menu-auth" style="display:flex;flex-direction:column;gap:10px">
+    <button class="btn-outline btn-block" onclick="closeMobileMenu();navigateTo('login')">Iniciar sesión</button>
+    <button class="btn-red btn-block" onclick="closeMobileMenu();navigateTo('register')">Registrarse</button>
+  </div>
+  <div id="mobile-menu-user" style="display:none;flex-direction:column;gap:10px">
+    <button class="btn-outline btn-block" onclick="closeMobileMenu();navigateTo('dashboard');initDashboard()">Mi área</button>
+    <button class="btn-outline-dark btn-block" id="mobile-nav-logout">Cerrar sesión</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PÁGINA PRINCIPAL — HOME
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-circle c1"></div>
+    <div class="hero-bg-circle c2"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow" id="hero-eyebrow">Consultoría en propiedad intelectual</p>
+        <h1 class="hero-title" id="hero-title">Protege lo que tu mente crea. <span>Patenta tu innovación.</span></h1>
+        <p class="hero-desc" id="hero-desc">Diagnóstico, redacción y seguimiento de patentes para universidades, emprendedores e inventores en todo el Perú.</p>
+        <div class="hero-btns">
+          <button class="btn-red" onclick="navigateTo('register')">Empieza gratis</button>
+          <a href="#servicios" class="btn-outline">Ver servicios</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:36px;color:#444;font-size:12px">
+          <i class="ti ti-mouse" style="font-size:15px"></i> Scroll para explorar
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-visual-box">
+          <div class="hero-logo-icon"><i class="ti ti-bulb"></i></div>
+          <span class="hero-visual-label">Logo animado · Ilustración 3D del prototipo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="section-inner">
+      <span class="section-tag fade-in" id="servicios-tag">Servicios</span>
+      <h2 class="section-title fade-in fade-in-delay-1" id="servicios-titulo">¿Qué hacemos por ti?</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2" id="servicios-subtitulo">Consultoría integral en propiedad intelectual.</p>
+      <div class="cards-grid" id="servicios-cards"></div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <div class="section-inner">
+      <div class="nosotros-grid">
+        <div class="nosotros-img fade-in">
+          <i class="ti ti-users"></i>
+          <span>Foto del equipo / empresa</span>
+        </div>
+        <div class="fade-in fade-in-delay-1">
+          <span class="section-tag" id="nosotros-tag">Sobre nosotros</span>
+          <h2 class="section-title" id="nosotros-titulo">Innovación que protege ideas reales</h2>
+          <p class="section-subtitle" id="nosotros-desc"></p>
+          <button class="btn-outline-dark">Conoce nuestra historia</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section id="proceso">
+    <div class="section-inner">
+      <span class="section-tag fade-in" id="proceso-tag">Proceso</span>
+      <h2 class="section-title fade-in fade-in-delay-1" id="proceso-titulo">¿Cómo trabajamos?</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2" id="proceso-subtitulo"></p>
+      <div class="proceso-steps" id="proceso-steps"></div>
+    </div>
+  </section>
+
+  <!-- PATENTES OTORGADAS -->
+  <section id="patentes">
+    <div class="section-inner">
+      <span class="section-tag fade-in" id="patentes-tag">Patentes otorgadas</span>
+      <h2 class="section-title fade-in fade-in-delay-1" id="patentes-titulo">Proyectos que protegimos</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2" id="patentes-subtitulo"></p>
+      <div class="videos-grid" id="patentes-videos"></div>
+    </div>
+  </section>
+
+  <!-- ESTADÍSTICAS -->
+  <section id="estadisticas">
+    <div class="section-inner">
+      <div class="stats-grid" id="stats-grid"></div>
+    </div>
+  </section>
+
+  <!-- CARRUSEL ALIADOS -->
+  <section id="aliados" style="padding:0">
+    <div class="carousel-header fade-in">
+      <span class="section-tag">Con quiénes trabajamos</span>
+      <h2 class="section-title" style="margin-bottom:4px">Nuestros aliados</h2>
+    </div>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="aliados-track"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top:60px">
+    <div class="section-inner">
+      <span class="section-tag fade-in">Preguntas frecuentes</span>
+      <h2 class="section-title fade-in fade-in-delay-1">Resolvemos tus dudas</h2>
+      <p class="section-subtitle fade-in fade-in-delay-2">Las preguntas más comunes antes de comenzar el proceso.</p>
+      <div class="faq-list fade-in" id="faq-list"></div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="section-inner">
+      <div class="contacto-grid">
+        <div class="fade-in">
+          <span class="section-tag">Contacto</span>
+          <h2 class="section-title">¿Listo para patentar tu idea?</h2>
+          <p class="section-subtitle">Escríbenos y uno de nuestros especialistas se pondrá en contacto contigo en menos de 24 horas.</p>
+          <form id="contact-form">
+            <input class="form-field" type="text" name="nombre" placeholder="Tu nombre completo" required />
+            <input class="form-field" type="email" name="email" placeholder="Correo electrónico" required />
+            <input class="form-field" type="text" name="asunto" placeholder="Describe brevemente tu invención" />
+            <textarea class="form-field" name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
+            <button type="submit" class="btn-red btn-block">Enviar mensaje</button>
+          </form>
+        </div>
+        <div class="fade-in fade-in-delay-1" style="padding-top:80px">
+          <div class="contact-info-item"><i class="ti ti-mail"></i><span id="contact-email">contacto@researchinnovation.com</span></div>
+          <div class="contact-info-item"><i class="ti ti-phone"></i><span id="contact-telefono">+51 900 000 000</span></div>
+          <div class="contact-info-item"><i class="ti ti-map-pin"></i><span id="contact-direccion">Huánuco, Perú</span></div>
+          <div class="contact-info-item"><i class="ti ti-brand-linkedin"></i><span id="contact-linkedin">Research & Innovation</span></div>
+          <div class="wsp-banner">
+            <div class="wsp-icon-box"><i class="ti ti-brand-whatsapp"></i></div>
+            <div><strong>Escríbenos por WhatsApp</strong><p>Respuesta rápida · Disponible lun–sáb</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta">
+    <div class="section-inner">
+      <h2 class="fade-in">Tu invención merece protección.<br>Empieza hoy.</h2>
+      <p class="fade-in fade-in-delay-1">Regístrate gratis y accede a nuestra biblioteca virtual, ficha orientativa y más.</p>
+      <button class="btn-white fade-in fade-in-delay-2" onclick="navigateTo('register')">Crear cuenta gratuita</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Research & Innovation SAC. Todos los derechos reservados.</span>
+    <nav class="footer-links">
+      <a href="#">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Sitemap</a>
+    </nav>
+  </footer>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PÁGINA LOGIN
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-login">
+  <div class="auth-wrapper">
+    <!-- Panel izquierdo decorativo -->
+    <div class="auth-left">
+      <div class="auth-brand">
+        <div class="auth-brand-icon"><i class="ti ti-bulb"></i></div>
+        <span class="auth-brand-name">Research <span>&</span> Innovation</span>
+      </div>
+      <h2 class="auth-tagline">Bienvenido de nuevo a tu espacio de <span>innovación</span>.</h2>
+      <p class="auth-desc">Accede a tu biblioteca virtual, revisa el estado de tu solicitud de patente y mantente informado de cada avance.</p>
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="ti ti-book"></i></div>
+          <div class="auth-feature-text"><p>Biblioteca virtual</p><span>Artículos especializados en propiedad intelectual</span></div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="ti ti-timeline"></i></div>
+          <div class="auth-feature-text"><p>Seguimiento en tiempo real</p><span>Visualiza cada fase de tu solicitud de patente</span></div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="ti ti-bell"></i></div>
+          <div class="auth-feature-text"><p>Alertas y notificaciones</p><span>Nunca pierdas un plazo importante</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Panel derecho: formulario -->
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <h2 class="auth-form-title">Iniciar sesión</h2>
+        <p class="auth-form-sub">¿No tienes cuenta? <a onclick="navigateTo('register')" style="cursor:pointer">Regístrate gratis</a></p>
+
+        <div id="login-error" class="auth-error"></div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Correo electrónico</label>
+            <div class="form-input-wrap">
+              <i class="ti ti-mail"></i>
+              <input class="form-field" id="login-email" type="email" placeholder="tu@email.com" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="login-password">Contraseña</label>
+            <div class="form-input-wrap" style="position:relative">
+              <i class="ti ti-lock"></i>
+              <input class="form-field" id="login-password" type="password" placeholder="Tu contraseña" autocomplete="current-password" required />
+              <button type="button" class="form-eye" id="toggle-login-pass"><i class="ti ti-eye"></i></button>
+            </div>
+          </div>
+          <div style="text-align:right;margin-bottom:20px">
+            <a href="#" onclick="showToast('Por ahora, contáctanos directamente para recuperar tu acceso.'); return false;" style="font-size:12px;color:var(--red)">¿Olvidaste tu contraseña?</a>
+          </div>
+          <button type="submit" class="btn-red btn-block" id="login-submit-btn">Iniciar sesión</button>
+        </form>
+
+        <div class="form-divider"><span>o continúa con</span></div>
+
+        <!-- Demo rápida: inicia sesión real contra cuentas de demostración -->
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button class="btn-outline-dark btn-block" onclick="loginDemo('cliente')">
+            <i class="ti ti-user-check" style="font-size:15px"></i> Demo: Cliente activo
+          </button>
+          <button class="btn-outline-dark btn-block" onclick="loginDemo('registrado')">
+            <i class="ti ti-user" style="font-size:15px"></i> Demo: Usuario registrado
+          </button>
+        </div>
+
+        <p style="font-size:12px;color:var(--gray-300);text-align:center;margin-top:20px">
+          Al iniciar sesión aceptas nuestros <a href="#" style="color:var(--red)">Términos de uso</a>.
+        </p>
+        <div style="margin-top:16px;text-align:center">
+          <button class="btn-outline-dark btn-sm" onclick="navigateTo('home')">
+            <i class="ti ti-arrow-left" style="font-size:13px"></i> Volver al inicio
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-login -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PÁGINA REGISTRO
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-register">
+  <div class="auth-wrapper">
+    <div class="auth-left">
+      <div class="auth-brand">
+        <div class="auth-brand-icon"><i class="ti ti-bulb"></i></div>
+        <span class="auth-brand-name">Research <span>&</span> Innovation</span>
+      </div>
+      <h2 class="auth-tagline">Accede gratis a una <span>biblioteca especializada</span> en patentes.</h2>
+      <p class="auth-desc">Regístrate y obtén acceso inmediato a contenido educativo, la ficha de orientación y, si te conviertes en cliente, al seguimiento en tiempo real de tu solicitud.</p>
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="ti ti-lock-open"></i></div>
+          <div class="auth-feature-text"><p>Registro 100% gratuito</p><span>Sin costos ni tarjeta de crédito</span></div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="ti ti-clipboard-text"></i></div>
+          <div class="auth-feature-text"><p>Ficha orientativa</p><span>Organiza tu proyecto antes de la consulta</span></div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="ti ti-shield-check"></i></div>
+          <div class="auth-feature-text"><p>Privacidad garantizada</p><span>Tu información técnica está protegida</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <h2 class="auth-form-title">Crear cuenta gratuita</h2>
+        <p class="auth-form-sub">¿Ya tienes cuenta? <a onclick="navigateTo('login')" style="cursor:pointer">Inicia sesión</a></p>
+
+        <!-- Indicador de pasos -->
+        <div class="step-indicator">
+          <div class="step-dot active">1</div>
+          <div class="step-line"></div>
+          <div class="step-dot">2</div>
+          <div class="step-line"></div>
+          <div class="step-dot">3</div>
+        </div>
+
+        <div id="reg-error" class="auth-error"></div>
+
+        <!-- PASO 1: Datos personales -->
+        <div class="register-step active" id="reg-step-1">
+          <div class="form-group">
+            <label class="form-label">Nombre completo *</label>
+            <div class="form-input-wrap">
+              <i class="ti ti-user"></i>
+              <input class="form-field" id="reg-name" type="text" placeholder="Ej: María García López" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Correo electrónico *</label>
+            <div class="form-input-wrap">
+              <i class="ti ti-mail"></i>
+              <input class="form-field" id="reg-email" type="email" placeholder="tu@email.com" autocomplete="email" />
+            </div>
+          </div>
+          <button class="btn-red btn-block" id="reg-next-1">
+            Continuar <i class="ti ti-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- PASO 2: Contraseña -->
+        <div class="register-step" id="reg-step-2">
+          <div class="form-group">
+            <label class="form-label">Contraseña *</label>
+            <div class="form-input-wrap" style="position:relative">
+              <i class="ti ti-lock"></i>
+              <input class="form-field" id="reg-password" type="password" placeholder="Mínimo 8 caracteres, con letras y números" />
+              <button type="button" class="form-eye" id="toggle-reg-pass"><i class="ti ti-eye"></i></button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmar contraseña *</label>
+            <div class="form-input-wrap" style="position:relative">
+              <i class="ti ti-lock"></i>
+              <input class="form-field" id="reg-confirm" type="password" placeholder="Repite tu contraseña" />
+              <button type="button" class="form-eye" id="toggle-reg-confirm"><i class="ti ti-eye"></i></button>
+            </div>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="reg-terms" />
+            <label for="reg-terms">Acepto los <a href="#">Términos de uso</a> y la <a href="#">Política de privacidad</a> de Research & Innovation.</label>
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-outline-dark" data-reg-back style="flex:1">
+              <i class="ti ti-arrow-left"></i> Atrás
+            </button>
+            <button class="btn-red" id="reg-next-2" style="flex:2">
+              Continuar <i class="ti ti-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- PASO 3: Perfil -->
+        <div class="register-step" id="reg-step-3">
+          <p class="form-label" style="margin-bottom:12px">¿Cuál es tu perfil? (opcional)</p>
+          <div class="radio-group" style="margin-bottom:18px">
+            <label class="radio-option">
+              <input type="radio" name="reg-perfil" value="universitario">
+              <div class="radio-option-text"><p>Estudiante / Investigador universitario</p></div>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="reg-perfil" value="emprendedor" checked>
+              <div class="radio-option-text"><p>Emprendedor / Inventor independiente</p></div>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="reg-perfil" value="empresa">
+              <div class="radio-option-text"><p>Empresa / Organización</p></div>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Universidad, empresa u organización (opcional)</label>
+            <input class="form-field" id="reg-org" type="text" placeholder="Ej: UNHEVAL, PUCP..." />
+          </div>
+          <div style="display:flex;gap:10px">
+            <button class="btn-outline-dark" data-reg-back style="flex:1">
+              <i class="ti ti-arrow-left"></i> Atrás
+            </button>
+            <button class="btn-red" id="reg-submit" style="flex:2">
+              <i class="ti ti-check"></i> Crear cuenta
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;text-align:center">
+          <button class="btn-outline-dark btn-sm" onclick="navigateTo('home')">
+            <i class="ti ti-arrow-left" style="font-size:13px"></i> Volver al inicio
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-register -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PÁGINA DASHBOARD — ÁREA PRIVADA
+═══════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dashboard-sidebar" id="dashboard-sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon"><i class="ti ti-bulb"></i></div>
+        <span class="sidebar-brand-name">R <span>&</span> I</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <p class="sidebar-section-label">Principal</p>
+        <button class="sidebar-link" data-panel="inicio">
+          <i class="ti ti-layout-dashboard"></i> Inicio
+        </button>
+
+        <p class="sidebar-section-label">Recursos</p>
+        <button class="sidebar-link" data-panel="biblioteca">
+          <i class="ti ti-book"></i> Biblioteca Virtual
+        </button>
+        <button class="sidebar-link" data-panel="ficha">
+          <i class="ti ti-clipboard-text"></i> Ficha de Orientación
+        </button>
+
+        <p class="sidebar-section-label">Mi patente</p>
+        <button class="sidebar-link locked" data-panel="seguimiento" id="sidebar-seguimiento" title="Solo para clientes activos">
+          <i class="ti ti-timeline"></i> Seguimiento
+        </button>
+
+        <p class="sidebar-section-label">Cuenta</p>
+        <button class="sidebar-link" data-panel="notificaciones" id="sidebar-notif">
+          <i class="ti ti-bell"></i> Notificaciones
+          <span class="badge" style="display:none">0</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar" id="sidebar-avatar">--</div>
+          <div class="sidebar-user-info">
+            <p id="sidebar-user-name">—</p>
+            <span id="sidebar-user-email">—</span>
+          </div>
+        </div>
+        <button class="sidebar-link" id="btn-logout" style="margin-top:8px;color:#666">
+          <i class="ti ti-logout"></i> Cerrar sesión
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+      <!-- TOPBAR -->
+      <div class="dashboard-topbar">
+        <button id="dash-hamburger" aria-label="Abrir menú" style="display:none;background:none;border:none;font-size:20px;cursor:pointer;margin-right:4px">
+          <i class="ti ti-menu-2"></i>
+        </button>
+        <span class="dash-topbar-title" id="dash-topbar-title">Panel de inicio</span>
+        <div class="dash-topbar-actions">
+          <button class="notif-btn" id="dash-notif-btn" title="Notificaciones">
+            <i class="ti ti-bell"></i>
+            <span class="notif-badge" style="display:none"></span>
+          </button>
+          <div style="font-size:13px;color:var(--gray-500)">
+            Hola, <strong id="dash-welcome-name" style="color:var(--black)">usuario</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-content">
+
+        <!-- ─── PANEL INICIO ─── -->
+        <div class="dash-panel active" id="panel-inicio">
+          <h2 class="dash-welcome">Bienvenido, <span id="dash-welcome-name-2">usuario</span> 👋</h2>
+          <p class="dash-welcome-sub">Desde aquí puedes acceder a todos tus recursos y el estado de tu solicitud.</p>
+          <div id="panel-inicio-stats" class="dash-stats"></div>
+          <div class="dash-grid-2col">
+            <div>
+              <h3 class="dash-section-title">Accesos rápidos</h3>
+              <div style="display:flex;flex-direction:column;gap:12px" id="panel-inicio-quick"></div>
+            </div>
+            <div>
+              <h3 class="dash-section-title">Notificaciones recientes</h3>
+              <div id="panel-inicio-notifs" class="notif-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── PANEL BIBLIOTECA ─── -->
+        <div class="dash-panel" id="panel-biblioteca">
+          <h2 class="dash-welcome">Biblioteca Virtual</h2>
+          <p class="dash-welcome-sub">Contenido especializado en propiedad intelectual para orientarte antes de iniciar tu proceso.</p>
+          <div class="library-grid">
+            <div>
+              <div class="library-sidebar">
+                <p class="library-filter-title">Categorías</p>
+                <div id="lib-filters"></div>
+              </div>
+            </div>
+            <div class="library-content">
+              <div class="library-search-bar">
+                <div class="library-search-wrap">
+                  <i class="ti ti-search"></i>
+                  <input class="library-search" id="lib-search" type="text" placeholder="Buscar artículos..." />
+                </div>
+              </div>
+              <div id="lib-articles"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── PANEL FICHA ORIENTATIVA ─── -->
+        <div class="dash-panel" id="panel-ficha">
+          <div id="panel-ficha-content"></div>
+        </div>
+
+        <!-- ─── PANEL SEGUIMIENTO ─── -->
+        <div class="dash-panel" id="panel-seguimiento">
+          <div id="panel-seguimiento-content"></div>
+        </div>
+
+        <!-- ─── PANEL NOTIFICACIONES ─── -->
+        <div class="dash-panel" id="panel-notificaciones">
+          <div id="panel-notificaciones-content"></div>
+        </div>
+
+      </div><!-- /dashboard-content -->
+    </main>
+  </div>
+  <div id="dashboard-sidebar-overlay" class="dashboard-sidebar-overlay"></div>
+</div><!-- /page-dashboard -->
+
+
+<!-- ═══ BOTÓN FLOTANTE WSP ═══ -->
+<a id="wsp-float" href="https://wa.me/51900000000" target="_blank" title="Escríbenos por WhatsApp" rel="noopener">
+  <i class="ti ti-brand-whatsapp"></i>
+</a>
+
+<!-- ═══ MODAL: ARTÍCULO BIBLIOTECA ═══ -->
+<div class="modal-overlay" id="modal-article">
+  <div class="modal" style="max-width:600px">
+    <button class="modal-close"><i class="ti ti-x"></i></button>
+    <h3 id="modal-article-title"></h3>
+    <div id="modal-article-body"></div>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn-outline-dark btn-sm" data-modal-close>Cerrar</button>
+      <button class="btn-red btn-sm" onclick="switchDashPanel('ficha');closeModal('modal-article')">
+        <i class="ti ti-clipboard-text"></i> Enviar mi ficha
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SCRIPT ═══ -->
+<script src="app.js"></script>
+
+</body>
+</html>
