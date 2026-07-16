@@ -3,13 +3,14 @@
 // 1. Forzar variables fijas para Railway antes de hacer cualquier otra cosa
 process.env.DB_USER = 'root';
 process.env.DB_NAME = 'railway';
-process.env.DB_PASSWORD = 'nmBQhnxrgmKJrqTnWhublEMRzBahnRy';
+process.env.DB_PASSWORD = 'nmBQhnxrgmKJrqTnWhublEMRzBahnRy'; // <-- Asegúrate de que esta sea la contraseña actual en tu panel de MySQL
 process.env.DB_HOST = 'mysql.railway.internal';
 process.env.DB_PORT = '3306';
 process.env.PORT = '3000';
 process.env.JWT_SECRET = 'sn>I-k&n}cv8]1T&+SK0)Nqo%oRh@q-*dgNJ@_x9wdhw&yR$7';
 
 require('dotenv').config();
+// ... resto del código igual
 
 const fs = require('fs');
 const path = require('path');
