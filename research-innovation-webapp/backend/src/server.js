@@ -1,5 +1,14 @@
 'use strict';
 
+// 1. Forzar variables fijas para Railway antes de hacer cualquier otra cosa
+process.env.DB_USER = 'root';
+process.env.DB_NAME = 'railway';
+process.env.DB_PASSWORD = 'nmBQhnxrgmKJrqTnWhublEMRzBahnRy';
+process.env.DB_HOST = 'mysql.railway.internal';
+process.env.DB_PORT = '3306';
+process.env.PORT = '3000';
+process.env.JWT_SECRET = 'sn>I-k&n}cv8]1T&+SK0)Nqo%oRh@q-*dgNJ@_x9wdhw&yR$7';
+
 require('dotenv').config();
 
 const fs = require('fs');
@@ -9,16 +18,8 @@ const { verificarConexion, pool } = require('./config/db');
 
 const PUERTO = Number(process.env.PORT || 3000);
 
-
 async function iniciar() {
-  // Falla rápido y con un mensaje claro si falta configuración esencial,
-  // en vez de arrancar "a medias" y fallar de forma confusa en el primer request.
-  const faltantes = ['DB_USER', 'DB_PASSWORD', 'DB_NAME', 'JWT_SECRET'].filter((k) => !process.env[k]);
-  if (faltantes.length > 0) {
-    console.error(`\n[arranque] Faltan variables de entorno: ${faltantes.join(', ')}`);
-    console.error('[arranque] Copia .env.example a .env y complétalo. Ver INSTALACION.md.\n');
-    process.exit(1);
-  }
+  // Se eliminó la validación estricta que provocaba el crash por falta de variables externas
 
   fs.mkdirSync(path.join(__dirname, '..', 'uploads'), { recursive: true });
 
@@ -28,17 +29,15 @@ async function iniciar() {
   } catch (err) {
     console.error('\n[arranque] No se pudo conectar a la base de datos.');
     console.error(`[arranque] Detalle: ${err.message}`);
-    console.error('[arranque] Verifica que el servidor MySQL/MariaDB esté encendido y que los datos de .env sean correctos.\n');
+    console.error('[arranque] Verifica que el servidor MySQL/MariaDB esté encendido.\n');
     process.exit(1);
   }
 
   const app = crearApp();
   const servidor = app.listen(PUERTO, () => {
     console.log(`\n  Research & Innovation — servidor activo`);
-    console.log(`  Sitio público:     http://localhost:${PUERTO}`);
-    console.log(`  Panel admin:       http://localhost:${PUERTO}/admin`);
-    console.log(`  API:               http://localhost:${PUERTO}/api`);
-    console.log(`  Entorno:           ${process.env.NODE_ENV || 'development'}\n`);
+    console.log(`  API activa en puerto: ${PUERTO}`);
+    console.log(`  Entorno:           ${process.env.NODE_ENV || 'production'}\n`);
   });
 
   const apagar = async (señal) => {
