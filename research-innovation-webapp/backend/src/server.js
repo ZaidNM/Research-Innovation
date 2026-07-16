@@ -9,10 +9,6 @@ const { verificarConexion, pool } = require('./config/db');
 
 const PUERTO = Number(process.env.PORT || 3000);
 
-if (!process.env.DB_USER || !process.env.DB_NAME) {
-    console.error("[arranque] Faltan variables de entorno: DB_USER, DB_NAME");
-    process.exit(1); 
-}
 
 async function iniciar() {
   // Falla rápido y con un mensaje claro si falta configuración esencial,
