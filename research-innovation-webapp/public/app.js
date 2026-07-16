@@ -21,7 +21,7 @@ const AppState = {
 /* ─── CLIENTE API ─── */
 async function api(ruta, opciones = {}) {
   const isForm = opciones.body instanceof FormData;
-  const resp = await fetch(`/api${ruta}`, {
+  const resp = await fetch(`tokaido.proxy.rlwy.net:30031`, {
     method: opciones.method || 'GET',
     headers: isForm ? undefined : { 'Content-Type': 'application/json' },
     body: isForm ? opciones.body : (opciones.body !== undefined ? JSON.stringify(opciones.body) : undefined),
