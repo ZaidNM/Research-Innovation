@@ -1,16 +1,6 @@
 'use strict';
 
-// 1. Forzar variables fijas usando el proxy público de tu base de datos en Railway
-process.env.DB_USER = 'root';
-process.env.DB_NAME = 'railway';
-process.env.DB_PASSWORD = 'nmBQhnxrgmKJrqTnWhublEMRzBahnRy'; 
-process.env.DB_HOST = 'tokaido.proxy.rlwy.net'; // <-- Usamos el host del proxy público
-process.env.DB_PORT = '30031';                  // <-- Puerto público de tu base de datos
-process.env.PORT = '3000';                      // Puerto del backend
-process.env.JWT_SECRET = 'sn>I-k&n}cv8]1T&+SK0)Nqo%oRh@q-*dgNJ@_x9wdhw&yR$7';
-
 require('dotenv').config();
-// ... el resto del código se queda exactamente igual
 
 const fs = require('fs');
 const path = require('path');
@@ -20,6 +10,8 @@ const { verificarConexion, pool } = require('./config/db');
 const PUERTO = Number(process.env.PORT || 3000);
 
 async function iniciar() {
+  // Nota: Dejamos la validación desactivada o activada, pero como usaremos las variables oficiales ya no fallará.
+  // ... resto de tu archivo original sin los process.env fijos que agregamos antes.
   // Se eliminó la validación estricta que provocaba el crash por falta de variables externas
 
   fs.mkdirSync(path.join(__dirname, '..', 'uploads'), { recursive: true });
