@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -35,28 +36,41 @@ function crearApp() {
   app.use(cookieParser());
 
   // ── API ─────────────────────────────────────────────────
+ // ── API ─────────────────────────────────────────────────
   app.use('/api', rutasApi);
 
-  // ── Panel de administración (sitio estático separado) ────
-  app.use('/admin', express.static(path.join(RAIZ_PROYECTO, 'admin')));
-  app.get('/admin/*', (req, res) => {
-    res.sendFile(path.join(RAIZ_PROYECTO, 'admin', 'index.html'));
+  // ── Panel de administración (Manejador seguro) ────
+  const rutaAdmin = path.join(RAIZ_PROYECTO, 'admin');
+  app.use('/admin', express.static(rutaAdmin));
+  app.get('/admin/*', (req, res, next) => {
+    const file = path.join(rutaAdmin, 'index.html');
+    if (fs.existsSync(file)) {
+      return res.sendFile(file);
+    }
+    next(); // Si no existe el archivo, pasa al error o ruta siguiente
   });
 
   // ── Sitio público + área de usuario ───────────────────────
-  app.use(express.static(path.join(RAIZ_PROYECTO, 'public')));
+  const rutaPublic = path.join(RAIZ_PROYECTO, 'public');
+  app.use(express.static(rutaPublic));
 
   // ── 404 para rutas /api no encontradas ────────────────────
   app.use('/api', notFoundHandler);
 
-  // Cualquier otra ruta no-API sirve el index del sitio público (SPA fallback).
+  // Cualquier otra ruta no-API sirve el index del sitio público o responde JSON de API viva
   app.get('*', (req, res) => {
-    res.sendFile(path.join(RAIZ_PROYECTO, 'public', 'index.html'));
+    const file = path.join(rutaPublic, 'index.html');
+    if (fs.existsSync(file)) {
+      return res.sendFile(file);
+    }
+    // Si no encuentra el index.html físico (como pasa en Railway), responde que la API está viva
+    res.json({ 
+      status: "online",
+      message: "Research & Innovation API funcionando correctamente en Railway" 
+    });
   });
 
   app.use(errorHandler);
 
   return app;
 }
-
-module.exports = crearApp;
