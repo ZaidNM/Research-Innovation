@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs'); // <-- Importado correctamente aquí arriba
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -17,13 +17,8 @@ function crearApp() {
   const app = express();
 
   app.disable('x-powered-by');
-  app.set('trust proxy', 1); // relevante si se despliega detrás de un proxy/CDN (Nginx, Render, etc.)
+  app.set('trust proxy', 1);
 
-  // La política de contenido (CSP) queda desactivada a propósito: el sitio público
-  // usa fuentes de Google Fonts e íconos externos, y activar una CSP estricta sin
-  // mapear cada origen permitido rompería la página en silencio. El resto de
-  // protecciones de helmet (nosniff, frameguard, etc.) sí quedan activas.
-  // Ver INSTALACION.md → "Hardening adicional para producción".
   app.use(helmet({ contentSecurityPolicy: false, crossOriginResourcePolicy: false }));
 
   if (process.env.CORS_ORIGIN) {
@@ -36,7 +31,6 @@ function crearApp() {
   app.use(cookieParser());
 
   // ── API ─────────────────────────────────────────────────
- // ── API ─────────────────────────────────────────────────
   app.use('/api', rutasApi);
 
   // ── Panel de administración (Manejador seguro) ────
@@ -47,7 +41,7 @@ function crearApp() {
     if (fs.existsSync(file)) {
       return res.sendFile(file);
     }
-    next(); // Si no existe el archivo, pasa al error o ruta siguiente
+    next();
   });
 
   // ── Sitio público + área de usuario ───────────────────────
@@ -63,7 +57,6 @@ function crearApp() {
     if (fs.existsSync(file)) {
       return res.sendFile(file);
     }
-    // Si no encuentra el index.html físico (como pasa en Railway), responde que la API está viva
     res.json({ 
       status: "online",
       message: "Research & Innovation API funcionando correctamente en Railway" 
@@ -74,3 +67,6 @@ function crearApp() {
 
   return app;
 }
+
+// Aseguramos que la exportación quede al final y libre de errores
+module.exports = crearApp;
